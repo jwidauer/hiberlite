@@ -1,4 +1,4 @@
-#include "hiberlite.h"
+#include "hiberlite/hiberlite.h"
 
 namespace hiberlite {
 

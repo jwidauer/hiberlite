@@ -1,4 +1,4 @@
-#include "hiberlite.h"
+#include "hiberlite/hiberlite.h"
 
 #include <string>
 #include <vector>
