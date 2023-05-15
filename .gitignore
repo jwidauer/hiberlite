@@ -273,6 +273,9 @@ tags
 # Persistent undo
 [._]*.un~
 
+# Clangd config file
+.clangd
+
 ### VisualStudioCode ###
 .vscode/*
 
