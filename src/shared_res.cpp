@@ -1,11 +1,8 @@
 
 #include "hiberlite/hiberlite.h"
 
-namespace hiberlite{
+namespace hiberlite {
 
-bean_key::bean_key()
-{
-	id=Database::NULL_ID;
-}
+bean_key::bean_key() { id = Database::NULL_ID; }
 
-} //namespace hiberlite
+}  // namespace hiberlite

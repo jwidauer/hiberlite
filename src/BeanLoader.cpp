@@ -1,8 +1,7 @@
 #include "hiberlite/hiberlite.h"
 
-namespace hiberlite{
+namespace hiberlite {
 
-BeanLoader::BeanLoader() : AVisitor<LoadBean>(&actor, LOADING)
-{}
+BeanLoader::BeanLoader() : AVisitor<LoadBean>(&actor, LOADING) {}
 
-} //namespace hiberlite
+}  // namespace hiberlite

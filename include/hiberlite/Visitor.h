@@ -3,114 +3,120 @@
 
 #include <stack>
 
-namespace hiberlite{
+#include "hiberlite/CppModel.h"
+#include "hiberlite/nvp.h"
+#include "hiberlite/shared_res.h"
 
-class access{
-public:
-	template<class A, class C>
-	static void hibernate(A& a, C& c) {
-		c.hibernate(a);
-	}
+namespace hiberlite {
 
-	template<class A, class C>
-	static void construct(A& /*a*/, C** c)
-	{
-		*c=new C();
-	}
+class access {
+ public:
+  template <class A, class C>
+  static void hibernate(A& a, C& c)
+  {
+    c.hibernate(a);
+  }
 
-	template<class A, class C>
-	static void destroy(A& /*a*/, C* c)
-	{
-		delete c;
-	}
+  template <class A, class C>
+  static void construct(A& /*a*/, C** c)
+  {
+    *c = new C();
+  }
+
+  template <class A, class C>
+  static void destroy(A& /*a*/, C* c)
+  {
+    delete c;
+  }
 };
 
-template<class A, class C>
-void hibernate(A& a, C& c, const long unsigned int bogus)
+template <class A, class C>
+void hibernate(A& a, C& c, const long unsigned int)
 {
-	access::hibernate(a,c);
+  access::hibernate(a, c);
 }
 
-template<class A, class C>
-void construct(A& a, C** c, const long unsigned int bogus)
+template <class A, class C>
+void construct(A& a, C** c, const long unsigned int)
 {
-	access::construct(a,c);
+  access::construct(a, c);
 }
 
-template<class A, class C>
-void destroy(A& a, C* c, const long unsigned int bogus)
+template <class A, class C>
+void destroy(A& a, C* c, const long unsigned int)
 {
-	access::destroy(a,c);
+  access::destroy(a, c);
 }
 
 /*
 class Actor{
-	public:
-		template<class Vis, class E, class Stream>
-		void act(Vis* vis, collection_nvp<C,Stream> nvp);
+        public:
+                template<class Vis, class E, class Stream>
+                void act(Vis* vis, collection_nvp<C,Stream> nvp);
 
-		template<class Vis, class C>
-		void act(Vis* vis, db_atom<C> atom);
+                template<class Vis, class C>
+                void act(Vis* vis, db_atom<C> atom);
 
-		template<class AV>
-		void notifyInitWalk(AV& av);
+                template<class AV>
+                void notifyInitWalk(AV& av);
 
-		template<class AV>
-		void notifyDoneWalk(AV& av);
+                template<class AV>
+                void notifyDoneWalk(AV& av);
 };
 */
 
-template<class C>
-class AVisitor{
-public:
-	bool is_loading();
-	bool is_saving();
-	bool is_model();
-	bool is_deleting();
+template <class C>
+class AVisitor {
+ public:
+  bool is_loading();
+  bool is_saving();
+  bool is_model();
+  bool is_deleting();
 
-	AVisitor(C* _actor, int _purp);
-	~AVisitor();
-	shared_connection getConnection();
-	sqlid_t getRootId();
-	inline Scope getScope() { return scope; }
+  AVisitor(C* _actor, int _purp);
+  ~AVisitor();
+  shared_connection getConnection();
+  sqlid_t getRootId();
+  inline Scope getScope() { return scope; }
 
-	template<class Y>
-	void startWalk(Y& obj, bean_key _k);
+  template <class Y>
+  void startWalk(Y& obj, bean_key _k);
 
-	template<class Y>
-	void walk(Y& obj);
+  template <class Y>
+  void walk(Y& obj);
 
-	template<class X>
-	AVisitor<C>& operator&(sql_nvp<X> nvp);
+  template <class X>
+  AVisitor<C>& operator&(sql_nvp<X> nvp);
 
-	template<class E, class S>
-	AVisitor<C>& operator&(collection_nvp<E,S> nvp);
+  template <class E, class S>
+  AVisitor<C>& operator&(collection_nvp<E, S> nvp);
 
-	template<class X>
-	AVisitor<C>& operator&(db_atom<X> atom);
+  template <class X>
+  AVisitor<C>& operator&(db_atom<X> atom);
 
-	void divePrefix(std::string name);
+  void divePrefix(std::string name);
 
-	void diveTable(std::string name);
+  void diveTable(std::string name);
 
-	void pop();
+  void pop();
 
-	static const int LOADING	=1;
-	static const int SAVING		=2;
-	static const int MODEL		=3;
-	static const int DELETING	=4;
-protected:
-	C* actor;
-	int purpose;
+  static const int LOADING = 1;
+  static const int SAVING = 2;
+  static const int MODEL = 3;
+  static const int DELETING = 4;
 
-	void popScope();
-	void pushAndSubTable(std::string name);
-	void pushAndSubPrefix(std::string prefix);
+ protected:
+  C* actor;
+  int purpose;
 
-	std::stack<Scope> stack;
-	Scope scope;
+  void popScope();
+  void pushAndSubTable(std::string name);
+  void pushAndSubPrefix(std::string prefix);
 
-	bean_key rootKey;
+  std::stack<Scope> stack;
+  Scope scope;
+
+  bean_key rootKey;
 };
 
 class DropChildren;
@@ -120,6 +126,6 @@ class BeanUpdater;
 class ExtractModel;
 class ModelExtractor;
 
-} //namespace hiberlite
+}  // namespace hiberlite
 
-#endif // VISITOR_H
+#endif  // VISITOR_H

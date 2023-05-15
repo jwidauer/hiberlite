@@ -1,8 +1,7 @@
 #include "hiberlite/hiberlite.h"
 
-namespace hiberlite{
+namespace hiberlite {
 
-ChildKiller::ChildKiller() : AVisitor<KillChildren>(&actor, DELETING)
-{}
+ChildKiller::ChildKiller() : AVisitor<KillChildren>(&actor, DELETING) {}
 
-} //namespace hiberlite
+}  // namespace hiberlite

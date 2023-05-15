@@ -2,4 +2,4 @@
 
 namespace hiberlite {
 
-} //namespace hiberlite
+}  // namespace hiberlite

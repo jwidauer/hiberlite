@@ -1,22 +1,29 @@
 #ifndef HIBERDEFS_H_INCLUDED
 #define HIBERDEFS_H_INCLUDED
 
-#if (defined _MSC_VER && _MSC_VER< 1600)
+#if (defined _MSC_VER && _MSC_VER < 1600)
 #include <boost/typeof/typeof.hpp>
-#define HIBERLITE_NVP(Field) hiberlite::sql_nvp< BOOST_TYPEOF(Field) >(#Field,Field)
+#define HIBERLITE_NVP(Field) hiberlite::sql_nvp<BOOST_TYPEOF(Field)>(#Field, Field)
 #else
-#define HIBERLITE_NVP(Field) hiberlite::sql_nvp< decltype(Field) >(#Field,Field)
+#define HIBERLITE_NVP(Field) hiberlite::sql_nvp<decltype(Field)>(#Field, Field)
 #endif
-#define HIBERLITE_BASE_CLASS(ClName) hiberlite::sql_nvp< ClName >(#ClName,*((ClName*)this) )
+#define HIBERLITE_BASE_CLASS(ClName) hiberlite::sql_nvp<ClName>(#ClName, *((ClName*)this))
 
-#define HIBERLITE_EXPORT_CLASS(ClName) 			\
-namespace hiberlite{							\
-template<>										\
-std::string Database::getClassName<ClName>()	\
-{	std::string temp(#ClName);std::replace(temp.begin(), temp.end(), ':', '_');return temp;}}
+#define HIBERLITE_EXPORT_CLASS(ClName)                \
+  namespace hiberlite {                               \
+  template <>                                         \
+  std::string Database::getClassName<ClName>()        \
+  {                                                   \
+    std::string temp(#ClName);                        \
+    std::replace(temp.begin(), temp.end(), ':', '_'); \
+    return temp;                                      \
+  }                                                   \
+  }
 
-//#define HIBERLITE_COLLECTION(Field) hiberlite::collection_nvp<typeof(Field),typeof(Field.begin())>(#Field, Field, Field.begin(), Field.end())
-//#define HIBERLITE_ARRAY(Field,N) hiberlite::collection_nvp<typeof(Field),typeof(Field[0])>(#Field,  *Field, *(Field+N))
+// #define HIBERLITE_COLLECTION(Field)
+// hiberlite::collection_nvp<typeof(Field),typeof(Field.begin())>(#Field, Field, Field.begin(),
+// Field.end()) #define HIBERLITE_ARRAY(Field,N)
+// hiberlite::collection_nvp<typeof(Field),typeof(Field[0])>(#Field,  *Field, *(Field+N))
 
 #define HIBERLITE_PRIMARY_KEY_COLUMN "hiberlite_id"
 #define HIBERLITE_PARENTID_COLUMN "hiberlite_parent_id"
@@ -25,4 +32,4 @@ std::string Database::getClassName<ClName>()	\
 
 #define HIBERLITE_PRIMARY_KEY_STORAGE_TYPE "PRIMARYKEY"
 
-#endif // HIBERDEFS_H_INCLUDED
+#endif  // HIBERDEFS_H_INCLUDED
